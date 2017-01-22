@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: THOTH_SPEED_BIZTALK
+# Cookbook Name:: BiztalkCookbook
 # Recipe:: Install_BizTalk_LocalDev Server
 #
 # Copyright (C) 2016  Dwight Goins
@@ -30,7 +30,7 @@ end
 log "#{cookbook_name}::VS Directory c:\\setup\\vs Created successfully"
 
 remote_file 'c:\setup\vs\en_visual_studio_ultimate_2013_with_update_5_x86_dvd_6815896.iso' do
-    source node['THOTH_SPEED_BIZTALK']['VS2013_IsoUrl']
+    source node['BiztalkCookbook']['VS2013_IsoUrl']
     action :create
 end
 log "#{cookbook_name}::VS Iso downloaded from Artifactory to c:\\setup\\vs successfully"
@@ -42,19 +42,19 @@ log "#{cookbook_name}::VS.Net AdminDeployment C:\\setup\\vs\\AdminDeployment.xml
 
 
 remote_file 'c:\setup\bts\DeploymentFrameworkForBizTalkV5_6.msi' do
-   source node['THOTH_SPEED_BIZTALK']['BTS_DeploymentFrameworkMsiUrl']
+   source node['BiztalkCookbook']['BTS_DeploymentFrameworkMsiUrl']
    action :create
  end
 log "#{cookbook_name}::DeploymentFrameworkFor Biztalk Msi downloaded from Artifactory to C:\\setup\\bts\\DeploymentFrameworkForBizTalkV5_6.msi successfully"
 
 remote_file 'c:\setup\bts\SqlXml4.msi' do
-   source node['THOTH_SPEED_BIZTALK']['SQLXmlUrl']
+   source node['BiztalkCookbook']['SQLXmlUrl']
    action :create
  end
 log "#{cookbook_name}::SQL Xml version 4.0 msi from artifactory downloaded to C:\\setup\\bts\\SqlXml4.msi successfully"
 
 remote_file 'c:\setup\bts\BTS.iso' do
-    source node['THOTH_SPEED_BIZTALK']['BTS_ISOUrl']
+    source node['BiztalkCookbook']['BTS_ISOUrl']
     action :create
 end
 log "#{cookbook_name}:: BizTalk Setup ISO File downloaded from Artifactory Server as C:\\setup\\bts\\BTS.iso successfully"
@@ -66,7 +66,7 @@ log "#{cookbook_name}::BizTalk Features File from template copied to C:\\setup\\
 
 
 remote_file 'c:\setup\bts\BTSRedistW2k8EN64.cab' do
-    source node['THOTH_SPEED_BIZTALK']['BTS_DependencyCabUrl']
+    source node['BiztalkCookbook']['BTS_DependencyCabUrl']
     action :create
 end
 log "#{cookbook_name}::BizTalk Dependency Cab File downloaded from Artifactory Server as C:\\setup\\bts\\BTSRedistW2k8EN64.cab successfully"
@@ -136,8 +136,8 @@ log "#{cookbook_name}::SQL Xml version 4.0 was installed"
 
 powershell_script 'Install Visual Studio 2013 Ultimate Update 5' do
     code <<-EOH         
-        $vsAdminDeploymentFile = "#{node['THOTH_SPEED_BIZTALK']['VSAdminDeploymentFile']}"
-        $vsIsoFile = "#{node.default['THOTH_SPEED_BIZTALK']['VS_ISOFile']}"
+        $vsAdminDeploymentFile = "#{node['BiztalkCookbook']['VSAdminDeploymentFile']}"
+        $vsIsoFile = "#{node.default['BiztalkCookbook']['VS_ISOFile']}"
         $vsMountResult = (Mount-DiskImage $vsIsoFile -PassThru)
     $vsDriveLetter = ($vsMountResult | Get-Volume).Driveletter
     $vsDrive = $vsDriveLetter + ":"
@@ -156,10 +156,10 @@ log "#{cookbook_name}::Installed VS.Net 2013 Ultimate with Update 5 Successfully
 log "#{cookbook_name}::Starting BizTalk Core Component Setup..."
 powershell_script 'Install BizTalk Core Components' do
     code <<-EOH         
-        $btsIsoFile = "#{node['THOTH_SPEED_BIZTALK']['BTS_ISOFile']}"
-        $btsCabFile = "#{node['THOTH_SPEED_BIZTALK']['BTS_DependencyCab']}"
-        $btsFeaturesFile = "#{node['THOTH_SPEED_BIZTALK']['BTS_FeaturesFile']}"
-        $btsErrorLog = "#{node['THOTH_SPEED_BIZTALK']['BTS_LogFile']}"
+        $btsIsoFile = "#{node['BiztalkCookbook']['BTS_ISOFile']}"
+        $btsCabFile = "#{node['BiztalkCookbook']['BTS_DependencyCab']}"
+        $btsFeaturesFile = "#{node['BiztalkCookbook']['BTS_FeaturesFile']}"
+        $btsErrorLog = "#{node['BiztalkCookbook']['BTS_LogFile']}"
         $btsMountResult = (Mount-DiskImage $btsIsoFile -PassThru)
     $btsDriveLetter = ($btsMountResult | Get-Volume).Driveletter
     $btsDrive = $btsDriveLetter + ":"

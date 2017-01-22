@@ -1,4 +1,4 @@
-# Amazon_Chef_BizTalk_2016
+# BizTalkCookbook
 
 TODO: Enter the cookbook description here.
 

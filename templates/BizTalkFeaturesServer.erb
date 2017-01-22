@@ -32,7 +32,7 @@
       </Password>
     </NTService>
     <SQL ID="SSO_DB_ID" DisplayName="SSO Database" Description="Specify the name of the SQL Server and Database that will be used as the credential store.">
-      <Server> <%= node['THOTH_SPEED_BIZTALK']['SQL_ServerName']%> </Server>
+      <Server> <%= node['BiztalkCookbook']['SQL_ServerName']%> </Server>
       <Database>SSODB</Database>
       <WindowsSecurity Editable="no">yes</WindowsSecurity>
       <UserName />
@@ -41,7 +41,7 @@
   </Feature>
   <Feature Name="WMI" DisplayName="BizTalk Server Group" Version="1.0" Description="The Microsoft Windows Management Instrumentation (WMI) layer encapsulates all administrative functions and management capabilities for BizTalk Server." ConfigByDefault="true">
     <SQL ID="{D757DBF9-5D71-4995-9F20-A552B7DFE7F1}" DisplayName="BizTalk Management Database" Description="This database is the central meta-information store for all BizTalk Servers.">
-      <Server> <%= node['THOTH_SPEED_BIZTALK']['SQL_ServerName']%></Server>
+      <Server> <%= node['BiztalkCookbook']['SQL_ServerName']%></Server>
       <Database>BizTalkMgmtDb</Database>
       <WindowsSecurity Editable="no">yes</WindowsSecurity>
       <UserName />
@@ -50,14 +50,14 @@
     <Question ID="CREATEORJOIN" Text="Create a &amp;new BizTalk Group;&amp;Join an existing BizTalk Group" Answers="Create,Join" Default="Create">
       <Answer Value="Create" GUID="{C4DEF4B8-163E-4a8d-AB01-6C43917248B1}" Selected="Yes">
         <SQL ID="{84ADD76E-EBEB-4bb8-B9EB-64F87E483C39}" DisplayName="BizTalk MessageBox Database" Description="This database stores subscriptions predicates. It is a host platform, where the queues and state tables for each BizTalk Server host are kept. The MessageBox database also stores the messages and message properties.">
-          <Server> <%= node['THOTH_SPEED_BIZTALK']['SQL_ServerName']%></Server>
+          <Server> <%= node['BiztalkCookbook']['SQL_ServerName']%></Server>
           <Database>BizTalkMsgBoxDb</Database>
           <WindowsSecurity Editable="no">yes</WindowsSecurity>
           <UserName />
           <Password />
         </SQL>
         <SQL ID="{1033195A-3C23-4750-BBD0-06BC12A175D4}" DisplayName="BizTalk Tracking Database" Description="This database stores business and health monitoring data tracked by the BizTalk Server tracking engine.">
-          <Server> <%= node['THOTH_SPEED_BIZTALK']['SQL_ServerName']%></Server>
+          <Server> <%= node['BiztalkCookbook']['SQL_ServerName']%></Server>
           <Database>BizTalkDTADb</Database>
           <WindowsSecurity Editable="no">yes</WindowsSecurity>
           <UserName />
@@ -94,8 +94,8 @@
           <Value>BizTalkServerApplication</Value>
         </Name>
         <NTService ID="{B64F63FA-E24E-4991-86F0-ED9F65B68A98}" DisplayName="BizTalk Host Instance Account" Description="Windows account with access to a specific In-Process BizTalk host instance. This account will be given Log on as Service rights.">
-          <UserName> <%= node['THOTH_SPEED_BIZTALK']['BTS_SvcHostAccount']%></UserName>
-          <Domain><%= node['THOTH_SPEED_BIZTALK']['BTS_SvcHostAccountDomain']%></Domain>
+          <UserName> <%= node['BiztalkCookbook']['BTS_SvcHostAccount']%></UserName>
+          <Domain><%= node['BiztalkCookbook']['BTS_SvcHostAccountDomain']%></Domain>
           <Password>
           </Password>
         </NTService>
@@ -119,8 +119,8 @@
           <Value>TSDEV1\BizTalkServerIsolatedHost</Value>
         </Name>
         <NTService ID="{D0A37CEE-F24E-4193-A19F-47B05D7EDA21}" DisplayName="BizTalk Isolated Host Instance Account" Description="Windows account with access to a specific Isolated BizTalk  host instance. This account will be given Log on as Service rights.">
-          <UserName> <%= node['THOTH_SPEED_BIZTALK']['BTS_SvcHostAccount']%></UserName>
-          <Domain><%= node['THOTH_SPEED_BIZTALK']['BTS_SvcHostAccountDomain']%></Domain>
+          <UserName> <%= node['BiztalkCookbook']['BTS_SvcHostAccount']%></UserName>
+          <Domain><%= node['BiztalkCookbook']['BTS_SvcHostAccountDomain']%></Domain>
           <Password>
           </Password>
         </NTService>
@@ -131,14 +131,14 @@
   <Feature Name="MOT" DisplayName="BAM runtime" Version="1.0" Description="Tracking data decoding service used to move tracked data and persist it for query use." />
   <Feature Name="BAMTools" DisplayName="Business Activity Monitoring tools" Version="1.0" Description="Tools for  the creation and maintenance of the SQL Server and Analysis Server (OLAP) infrastructure for Business Activity Monitoring." ConfigByDefault="true" ISDIRTY="true">
     <SQL ID="{E1FC3106-8DD4-4f12-9EB6-849DD8BDD605}" DisplayName="BAM Primary Import Database" Description="SQL database used to store the events from the Business Activities and then query for the progress and data of the activity instances. This database is also used for real-time aggregations.">
-      <Server> <%= node['THOTH_SPEED_BIZTALK']['SQL_ServerName']%></Server>
+      <Server> <%= node['BiztalkCookbook']['SQL_ServerName']%></Server>
       <Database>BAMPrimaryImport</Database>
       <WindowsSecurity Editable="no">yes</WindowsSecurity>
       <UserName />
       <Password />
     </SQL>
     <SQL ID="{1D372BCB-DF59-43b6-A4A9-87082B5727B0}" DisplayName="BAM Archive Database" Description="SQL database used for archiving the Business Activity data which is too old. It is recommended to create the BAM Archive database to minimize the accumulation of Business Activity data in the BAM Primary Import Database.">
-      <Server> <%= node['THOTH_SPEED_BIZTALK']['SQL_ServerName']%></Server>
+      <Server> <%= node['BiztalkCookbook']['SQL_ServerName']%></Server>
       <Database>BAMArchive</Database>
       <WindowsSecurity Editable="no">yes</WindowsSecurity>
       <UserName />
@@ -147,14 +147,14 @@
     <Question ID="{12A38787-6B24-40ab-8888-5FE8ABA87B26}" Text="Enable A&amp;nalysis Services for BAM aggregations" Answers="Yes,No" Default="Yes">
       <Answer Value="Yes" GUID="{902F7E20-D6AE-453f-9D23-935ED7AF94C3}" Selected="Yes">
         <SQL ID="{16567D1E-6946-4f4e-BB3F-900DE2648328}" DisplayName="BAM Analysis Database" Description="Analysis Services database that keeps the aggregated historical data for Business Activities" MSOLAPServer="Yes">
-          <Server> <%= node['THOTH_SPEED_BIZTALK']['SQL_ServerName']%></Server>
+          <Server> <%= node['BiztalkCookbook']['SQL_ServerName']%></Server>
           <Database>BAMAnalysis</Database>
           <WindowsSecurity Editable="no">yes</WindowsSecurity>
           <UserName />
           <Password />
         </SQL>
         <SQL ID="{B973DB76-BA7F-4a2e-A57E-07EEF54B37A8}" DisplayName="BAM Star Schema Database" Description="SQL database used to transform the data collected from the Business Activity Monitoring for OLAP Processing. This database is required when the BAM Analysis database is used.">
-          <Server> <%= node['THOTH_SPEED_BIZTALK']['SQL_ServerName']%></Server>
+          <Server> <%= node['BiztalkCookbook']['SQL_ServerName']%></Server>
           <Database>BAMStarSchema</Database>
           <WindowsSecurity Editable="no">yes</WindowsSecurity>
           <UserName />
@@ -195,15 +195,15 @@
   </Feature>
   <Feature Name="RulesEngine" DisplayName="Business Rules Engine" Version="3.0" Description="BizTalk native support for declarative Business Rules." ConfigByDefault="true">
     <SQL ID="{E6C5E071-D6EB-4c31-BFE6-CA16637FBEEB}" DisplayName="Rule Engine Database" Description="SQL Rule Store">
-      <Server> <%= node['THOTH_SPEED_BIZTALK']['SQL_ServerName']%></Server>
+      <Server> <%= node['BiztalkCookbook']['SQL_ServerName']%></Server>
       <Database>BizTalkRuleEngineDb</Database>
       <WindowsSecurity>yes</WindowsSecurity>
       <UserName />
       <Password />
     </SQL>
     <NTService ID="{6ABAD351-9C7B-423e-9FDE-3A5C52441C00}" DisplayName="Rule Engine Update Service" Description="Notification for the deployment/ undeployment of policies">
-      <UserName> <%= node['THOTH_SPEED_BIZTALK']['BTS_SvcHostAccount']%></UserName>
-      <Domain><%= node['THOTH_SPEED_BIZTALK']['BTS_SvcHostAccountDomain']%></Domain>
+      <UserName> <%= node['BiztalkCookbook']['BTS_SvcHostAccount']%></UserName>
+      <Domain><%= node['BiztalkCookbook']['BTS_SvcHostAccountDomain']%></Domain>
       <Password>
       </Password>
     </NTService>

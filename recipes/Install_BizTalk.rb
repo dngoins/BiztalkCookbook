@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: THOTH_SPEED_BIZTALK
+# Cookbook Name:: BiztalkCookbook
 # Recipe:: Install_BizTalk_Server / Integration / Stage/ QA/ Production
 #
 # Copyright (C) 2016  Dwight Goins

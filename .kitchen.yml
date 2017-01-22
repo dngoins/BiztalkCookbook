@@ -19,7 +19,7 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[Amazon_Chef_BizTalk_2016::default]
+      - recipe[BiztalkCookbook::default]
     verifier:
       inspec_tests:
         - test/recipes
