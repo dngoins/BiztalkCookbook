@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: BiztalkCookbook
-# Recipe:: Install_BizTalk_BuildServer / Development machine
+# Recipe:: Install_BizTalk_Test Server
 #
 # Copyright (C) 2016  Dwight Goins
 #
@@ -19,43 +19,14 @@
 
 # requires the BiztalkCookbook::Default recipe to be run first
 
-# directory 'c:\Setup\VS' do
-#   recursive true
-#   action :create
-# end
-# log "#{cookbook_name}::VS Directory c:\\setup\\vs Created successfully"
 
-# remote_file 'c:\setup\vs\en_visual_studio_ultimate_2013_with_update_5_x86_dvd_6815896.iso' do
-#   source node['BiztalkCookbook']['VS2013_IsoUrl']
-#   action :create_if_missing
-# end
-# log "#{cookbook_name}::VS Iso downloaded from Artifactory to c:\\setup\\vs successfully"
+log "#{cookbook_name}::Starting BizTalk Core Component Setup..."
 
-# template 'c:\setup\vs\AdminDeployment.xml' do
-#   source 'VSInstallConfig.erb'
-# end
-# log "#{cookbook_name}::VS.Net AdminDeployment C:\\setup\\vs\\AdminDeployment.xml successfully"
-
-# powershell_script 'Install Visual Studio 2013 Ultimate Update 5' do
-#   code <<-EOH
-#         $vsIsoFile = "#{node.default['BiztalkCookbook']['VS_ISOFile']}"
-#         $vsMountResult = (Mount-DiskImage $vsIsoFile -PassThru)
-#     $vsDriveLetter = ($vsMountResult | Get-Volume).Driveletter
-#     $vsDrive = $vsDriveLetter + ":"
-#     cd $vsDrive
-#     $vsLaunchProcess = ".\\vs_ultimate.exe"
-#     start-Process -filePath ".\\vs_ultimate.exe" -argumentList "/adminfile c:\\setup\\vs\\admindeployment.xml /quiet /norestart /L c:\\setup\\vs\\install.log" -wait
-#     dismount-diskimage $vsIsoFile
-#     EOH
-# end
-# log "#{cookbook_name}::Installed VS.Net 2013 Ultimate with Update 5 Successfully"
-
-# log "#{cookbook_name}::Starting BizTalk Core Component Setup..."
 # powershell_script 'Install BizTalk Core Components' do
 #   code <<-EOH
 #         $btsIsoFile = "#{node['BiztalkCookbook']['BTS_ISOFile']}"
 #         $btsCabFile = "#{node['BiztalkCookbook']['BTS_DependencyCab']}"
-#         $btsFeaturesFile = "#{node['BiztalkCookbook']['BTS_BuildFeaturesFile']}"
+#         $btsFeaturesFile = "#{node['BiztalkCookbook']['BTS_ServerFeaturesFile']}"
 #         $btsErrorLog = "#{node['BiztalkCookbook']['BTS_LogFile']}"
 #         $btsMountResult = (Mount-DiskImage $btsIsoFile -PassThru)
 #     $btsDriveLetter = ($btsMountResult | Get-Volume).Driveletter
@@ -72,9 +43,9 @@
 
 #     cd "\\BizTalk Server"
 #     $btsArgs = "/s '" + $btsFeaturesFile + "' /L '" + $btsErrorLog + "' /CABPATH '" + $btsCabFile + "'"
-#     start-Process -filePath ".\\setup.exe" -argumentList "/s c:\\setup\\bts\\biztalkbuildfeatures.xml /L c:\\setup\\bts\\install.log /CABPATH c:\\setup\\bts\\BTSRedistW2k12EN64.cab"  -wait
+#     start-Process -filePath ".\\setup.exe" -argumentList "/s c:\\setup\\bts\\biztalkserverfeatures.xml /L c:\\setup\\bts\\install.log /CABPATH c:\\setup\\bts\\BTSRedistW2k12EN64.cab"  -wait
 
-#   write-host "Installing ESB Toolkit 2.3"
+#     write-host "Installing ESB Toolkit 2.3"
 #     cd "ESBT_x64"
 #     start-Process -filePath "c:\\windows\\sysWow64\\msiexec.exe" -argumentList "/qn /le ""C:\\setup\\bts\\esbLog.log"" /i ""Biztalk ESB Toolkit 2.3.msi"" "  -wait
 
@@ -82,6 +53,6 @@
 #     EOH
 #   guard_interpreter :powershell_script
 #   not_if '( (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\BizTalk Server\3.0").ProductVersion -eq "3.11.158.0") '
-#   #  not_if '(Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\BizTalk Server\3.0")'
 # end
+
 log "#{cookbook_name}::Installed BizTalk CoreComponents Successfully"
